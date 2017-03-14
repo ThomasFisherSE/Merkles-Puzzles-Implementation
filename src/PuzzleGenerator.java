@@ -12,9 +12,9 @@ public class PuzzleGenerator {
 			writeToFile(m_puzzles[puzzleNo]);
 		}
 	}
-	
-	public static void writeToFile(Puzzle puzzle) throws FileNotFoundException {
-		PrintWriter out = new PrintWriter(OUTPUT_FILE);
+		
+	public static void writeToFile(Puzzle puzzle) throws Exception {
+		PrintWriter out = new PrintWriter(new FileWriter(OUTPUT_FILE, true));
 		out.println(puzzle.toString() + '\n');
 		out.close();
 	}
