@@ -74,15 +74,15 @@ public class DES {
 	  * Generates a random key using a random number generator
 	  * @return Randomly generated key
 	  */
-	public SecretKey generateRandomKey(int keySize) throws NoSuchAlgorithmException{
+	public SecretKey generateRandomKey() throws NoSuchAlgorithmException{
 		//Use java's key generator to produce a random key.
 		KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
-		keyGenerator.init(keySize);
+		keyGenerator.init(56);
 		SecretKey secretKey = keyGenerator.generateKey();
 		
 		//print the key
 		String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-		System.out.println(encodedKey);
+		//System.out.println(encodedKey);
 
 		return secretKey;
 	}

@@ -1,14 +1,25 @@
+import java.io.*;
 import java.security.NoSuchAlgorithmException;
 
 public class PuzzleGenerator {
 	
-	private Puzzle[] m_puzzles = new Puzzle[1023];
+	private static Puzzle[] m_puzzles = new Puzzle[1023];
+	private static final String OUTPUT_FILE = "puzzles.txt";
 	
-	public void generatePuzzles() throws Exception {
+	public static void generatePuzzles() throws Exception {
 		for (int puzzleNo = 0; puzzleNo < m_puzzles.length; puzzleNo++) {
 			m_puzzles[puzzleNo] = new Puzzle(puzzleNo);
+			writeToFile(m_puzzles[puzzleNo]);
 		}
 	}
 	
+	public static void writeToFile(Puzzle puzzle) throws FileNotFoundException {
+		PrintWriter out = new PrintWriter(OUTPUT_FILE);
+		out.println(puzzle.toString() + '\n');
+		out.close();
+	}
 	
+	public static void main(String[] args) throws Exception {
+		generatePuzzles();
+	}
 }
