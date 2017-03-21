@@ -9,21 +9,17 @@ import javax.crypto.SecretKey;
 public class Puzzle {
 	private int m_number;
 	private SecretKey m_keyPart;
-	private static SecretKey m_encryptionKey;
+	private SecretKey m_encryptionKey;
 	private byte[] m_encryptedPuzzle;
 	private String m_cryptogram;
 	private DES m_encryptor;
 	private byte[] m_unencryptedPuzzle;
 	
-	public static void generateEncryptionKey() throws Exception {
-		DES encryptor = new DES();
-		
-		m_encryptionKey = encryptor.generateRandomKey();
-	}
-	
 	public Puzzle(int number) throws Exception {
 		m_number = number;
 		m_encryptor = new DES();
+		
+		m_encryptionKey = m_encryptor.generateRandomKey();
 		
 		// First 128 zero bits
 		byte[] zeros = new byte[15];
@@ -45,8 +41,8 @@ public class Puzzle {
 		// Set last 48 bits of encryption key to 0s
 		byte[] encryptKey = m_encryptionKey.getEncoded();
 		Arrays.fill(encryptKey, 2, 8, (byte) 0);
-		m_encryptionKey = CryptoLib.createKey(encryptKey);
-				
+		m_encryptionKey = CryptoLib.createKey(encryptKey);	
+		
 		// Encrypt
 		m_encryptedPuzzle = m_encryptor.encrypt(m_unencryptedPuzzle, m_encryptionKey);
 		
