@@ -22,7 +22,8 @@ public class Puzzle {
 		m_encryptionKey = m_encryptor.generateRandomKey();
 		
 		// First 128 zero bits
-		byte[] zeros = new byte[15];
+		byte[] zeros = new byte[16];
+		
 		Arrays.fill(zeros, (byte) 0);
 		
 		// 16 bit number part
@@ -38,11 +39,13 @@ public class Puzzle {
 		stream.write(m_keyPart.getEncoded());
 		m_unencryptedPuzzle = stream.toByteArray();
 		
+		System.out.println(m_unencryptedPuzzle.length);
+		
 		// Set last 48 bits of encryption key to 0s
 		byte[] encryptKey = m_encryptionKey.getEncoded();
 		Arrays.fill(encryptKey, 2, 8, (byte) 0);
 		m_encryptionKey = CryptoLib.createKey(encryptKey);	
-		
+
 		// Encrypt
 		m_encryptedPuzzle = m_encryptor.encrypt(m_unencryptedPuzzle, m_encryptionKey);
 		
