@@ -8,48 +8,53 @@ import javax.crypto.SecretKey;
 
 public class Puzzle {
 	private int m_number;
-	private SecretKey m_key;
-	private SecretKey m_encryptionKey;
+	private SecretKey m_keyPart;
+	private static SecretKey m_encryptionKey;
 	private byte[] m_encryptedPuzzle;
 	private String m_cryptogram;
 	private DES m_encryptor;
 	private byte[] m_unencryptedPuzzle;
 	
+	public static void generateEncryptionKey() throws Exception {
+		DES encryptor = new DES();
+		
+		m_encryptionKey = encryptor.generateRandomKey();
+	}
+	
 	public Puzzle(int number) throws Exception {
 		m_number = number;
+		m_encryptor = new DES();
 		
+		// First 128 zero bits
 		byte[] zeros = new byte[15];
 		Arrays.fill(zeros, (byte) 0);
 		
-		byte[] numberInBytes = CryptoLib.smallIntToByteArray(number);
+		// 16 bit number part
+		byte[] numberPart = CryptoLib.smallIntToByteArray(number);
 		
-		m_encryptor = new DES();
+		// 64 bit key part
+		m_keyPart = m_encryptor.generateRandomKey();
 		
-		m_key = m_encryptor.generateRandomKey();
-		byte[] encodedKey = m_key.getEncoded();
-		
-		Arrays.fill(encodedKey, 1, 7, (byte) 0);
-		
-		m_encryptionKey = CryptoLib.createKey(encodedKey);
-		
+		// Concatenate each part of the puzzle
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		stream.write(zeros);
-		stream.write(numberInBytes);
-		stream.write(encodedKey);
-		
+		stream.write(numberPart);
+		stream.write(m_keyPart.getEncoded());
 		m_unencryptedPuzzle = stream.toByteArray();
 		
-		m_cryptogram = CryptoLib.byteArrayToString(m_unencryptedPuzzle);
+		// Set last 48 bits of encryption key to 0s
+		byte[] encryptKey = m_encryptionKey.getEncoded();
+		Arrays.fill(encryptKey, 2, 8, (byte) 0);
+		m_encryptionKey = CryptoLib.createKey(encryptKey);
+				
+		// Encrypt
+		m_encryptedPuzzle = m_encryptor.encrypt(m_unencryptedPuzzle, m_encryptionKey);
+		
+		// Turn into plaintext
+		m_cryptogram = CryptoLib.byteArrayToString(m_encryptedPuzzle);
+		
+		// Print puzzle
 		System.out.println(m_cryptogram);
-	}
-	
-	public byte[] encrypt() throws Exception {
-		DES desEncryptor = new DES();
-		
-		desEncryptor.encrypt(m_cryptogram, m_encryptionKey);
-		
-		return m_encryptedPuzzle;
-		
 	}
 	
 	public String toString() {

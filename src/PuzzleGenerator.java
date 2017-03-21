@@ -7,6 +7,8 @@ public class PuzzleGenerator {
 	private final String OUTPUT_FILE = "puzzles.txt";
 	
 	public void generatePuzzles() throws Exception {
+		Puzzle.generateEncryptionKey();
+		
 		for (int puzzleNo = 0; puzzleNo < m_puzzles.length; puzzleNo++) {
 			m_puzzles[puzzleNo] = new Puzzle(puzzleNo);
 			writeToFile(m_puzzles[puzzleNo]);
@@ -15,7 +17,7 @@ public class PuzzleGenerator {
 		
 	public void writeToFile(Puzzle puzzle) throws Exception {
 		PrintWriter out = new PrintWriter(new FileWriter(OUTPUT_FILE, true));
-		out.println(puzzle.toString() + '\n');
+		out.println(puzzle.toString());
 		out.close();
 	}
 }

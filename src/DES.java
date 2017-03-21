@@ -47,6 +47,21 @@ public class DES {
 		
 		return encryptedText;
 	}
+	
+	/**
+	  * Encrypts a plaintext string into cyphertext using a secret key
+	  * @return The cyphertext produced by encrypting plaintext using AES with the secret key
+	  */
+	public byte[] encrypt(byte[] input, SecretKey secretKey) throws Exception {
+		
+		//Initialise the cipher to be in encrypt mode, using the given key.
+		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+		
+		//Perform the encryption
+		byte[] encryptedByte = cipher.doFinal(input);
+		
+		return encryptedByte;
+	}
 
 	/**
 	  * Decrypts a cyphertext string into plaintext using a secret key
