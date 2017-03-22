@@ -38,6 +38,7 @@ public class Cracking {
 			try {
 				byte[] decryptedPuzzle = new DES().decrypt(puzzle, CryptoLib.createKey(key));
 				
+				
 				plaintextPuzzles.add(CryptoLib.byteArrayToString(decryptedPuzzle));
 			} catch (Exception e) {
 				// Invalid key
@@ -49,8 +50,14 @@ public class Cracking {
 		cleanDuplicates.addAll(plaintextPuzzles);
 		plaintextPuzzles.clear();
 		plaintextPuzzles.addAll(cleanDuplicates);
-		System.out.println(plaintextPuzzles);
+		//System.out.println(plaintextPuzzles);
 	
+		for (String elem: plaintextPuzzles) {
+			if (elem.subSequence(0, 15).equals("AAAAAAAAAAAAAAA")) {
+				System.out.println("Cracked plaintext: " + elem);
+			}
+		}
+		
 		System.out.println("Done cracking");
 	}
 	

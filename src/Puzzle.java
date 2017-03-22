@@ -39,8 +39,6 @@ public class Puzzle {
 		stream.write(m_keyPart.getEncoded());
 		m_unencryptedPuzzle = stream.toByteArray();
 		
-		System.out.println(m_unencryptedPuzzle.length);
-		
 		// Set last 48 bits of encryption key to 0s
 		byte[] encryptKey = m_encryptionKey.getEncoded();
 		Arrays.fill(encryptKey, 2, 8, (byte) 0);
