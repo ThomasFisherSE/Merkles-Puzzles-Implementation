@@ -13,6 +13,8 @@ import java.util.Set;
 
 public class Cracking {
 	
+	static int m_position;
+	
 	public static void main(String[] args) throws Exception {
 		// Choose random puzzle
 		String puzzle = randomPuzzle();
@@ -55,6 +57,7 @@ public class Cracking {
 		for (String elem: plaintextPuzzles) {
 			if (elem.subSequence(0, 15).equals("AAAAAAAAAAAAAAA")) {
 				System.out.println("Cracked plaintext: " + elem);
+				System.out.println("Position of puzzle: " + m_position);
 			}
 		}
 		
@@ -63,7 +66,9 @@ public class Cracking {
 	
 	public static String randomPuzzle() throws IOException {
 		String[] puzzles = readPuzzleFile("puzzles.txt");
-		return puzzles[(int)(Math.random() * puzzles.length)];
+		m_position += (int)(Math.random() * puzzles.length);
+		String puzzle = puzzles[m_position];
+		return puzzle;
 	}
 	
 	public static String[] readPuzzleFile(String filepath) throws IOException {
