@@ -44,7 +44,7 @@ public class Puzzle {
 		// Set last 48 bits of encryption key to 0s
 		byte[] encryptKey = m_encryptionKey.getEncoded();
 		Arrays.fill(encryptKey, 2, 8, (byte) 0);
-		m_encryptionKey = CryptoLib.createKey(encryptKey);	
+		m_encryptionKey = CryptoLib.createKey(encryptKey);
 
 		// Encrypt
 		m_encryptedPuzzle = m_encryptor.encrypt(m_unencryptedPuzzle, m_encryptionKey);
@@ -54,6 +54,10 @@ public class Puzzle {
 		
 		// Print puzzle
 		System.out.println(m_cryptogram);
+	}
+	
+	public byte[] getKey() {
+		return m_encryptionKey.getEncoded();
 	}
 	
 	public String toString() {
