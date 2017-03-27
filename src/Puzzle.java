@@ -49,13 +49,14 @@ public class Puzzle {
 		
 		// Turn into plaintext
 		m_cryptogram = CryptoLib.byteArrayToString(m_encryptedPuzzle);
-		
-		// Print puzzle
-		System.out.println(m_cryptogram);
+	}
+	
+	public int getPuzzleNo() {
+		return m_number;
 	}
 	
 	public byte[] getKey() {
-		return m_encryptionKey.getEncoded();
+		return m_keyPart.getEncoded();
 	}
 	
 	public String toString() {

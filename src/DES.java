@@ -67,24 +67,15 @@ public class DES {
 	  * Decrypts a cyphertext string into plaintext using a secret key
 	  * @return The plaintext produced from decrypting cyphertext using AES with a secret key
 	  */
-	/*
-	public String decrypt(String encryptedText, SecretKey secretKey)
+	public String decryptToString(String encryptedText, SecretKey secretKey)
 			throws Exception {
-		//Get a new Base64 (ASCII) decoder and use it to convert ciphertext from a string into bytes
-		Base64.Decoder decoder = Base64.getDecoder();
-		byte[] encryptedTextByte = decoder.decode(encryptedText);
-		
-		//Initialise the cipher to be in decryption mode, using the given key.
-		cipher.init(Cipher.DECRYPT_MODE, secretKey);
-		
-		//Perform the decryption
-		byte[] decryptedByte = cipher.doFinal(encryptedTextByte);
+		byte[] decryptedByte = decrypt(encryptedText, secretKey);
 		
 		//Convert byte representation of plaintext into a string
 		String decryptedText = new String(decryptedByte);
 		
 		return decryptedText;
-	} */
+	}
 	
 	public byte[] decrypt(String encryptedText, SecretKey secretKey)
 			throws Exception {

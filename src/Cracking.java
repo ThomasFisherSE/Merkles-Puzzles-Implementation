@@ -15,16 +15,33 @@ public class Cracking {
 	
 	static int m_position;
 	
-	public static void main(String[] args) throws Exception {
+	public int crackingProcess() throws Exception {
 		// Choose random puzzle
 		String puzzle = randomPuzzle();
 		System.out.println("Cracking puzzle: " + puzzle);
-		crack(puzzle);
+		String crackedPuzzle = crack(puzzle);
+		
+		byte[] puzzleNoBytes = extractPuzzleNo(crackedPuzzle);
+		
+		String plaintextPuzzleNo = CryptoLib.byteArrayToString(puzzleNoBytes);
+		
+		int puzzleNumber = CryptoLib.byteArrayToSmallInt(puzzleNoBytes);
+		
+		System.out.println("Plaintext Puzzle Number: " + plaintextPuzzleNo + " | Actual Number: " + puzzleNumber);
+		
+		byte[] keyBytes = extractKey(crackedPuzzle);
+		
+		String plaintextKey = CryptoLib.byteArrayToString(keyBytes);
+		
+		System.out.println("Plaintext Key: " + plaintextKey);
+		
+		return puzzleNumber;
 	}
 	
-	public static void crack(String puzzle) throws Exception {
+	public static String crack(String puzzle) throws Exception {
 		ArrayList<String> plaintextPuzzles = new ArrayList<String>();
 		Set<String> cleanDuplicates = new HashSet<>();
+		String crackedPuzzle = "N/A";
 		
 		for (int i=0; i<Math.pow(2, 16); i++) {
 			byte[] keyBits = CryptoLib.smallIntToByteArray(i);
@@ -56,17 +73,30 @@ public class Cracking {
 	
 		for (String elem: plaintextPuzzles) {
 			if (elem.subSequence(0, 15).equals("AAAAAAAAAAAAAAA")) {
+				crackedPuzzle = elem;
 				System.out.println("Cracked plaintext: " + elem);
-				System.out.println("Position of puzzle: " + m_position);
+				//System.out.println("Position of puzzle: " + m_position);
 			}
 		}
 		
-		System.out.println("Done cracking");
+		return crackedPuzzle;
+	}
+	
+	public static byte[] extractKey(String puzzle)  {
+		byte[] puzzleBytes = CryptoLib.stringToByteArray(puzzle);
+		
+		return Arrays.copyOfRange(puzzleBytes, 18, 26);
+	}
+	
+	public static byte[] extractPuzzleNo(String puzzle) {
+		byte[] puzzleBytes = CryptoLib.stringToByteArray(puzzle);
+		
+		return Arrays.copyOfRange(puzzleBytes, 16, 18);
 	}
 	
 	public static String randomPuzzle() throws IOException {
 		String[] puzzles = readPuzzleFile("puzzles.txt");
-		m_position += (int)(Math.random() * puzzles.length);
+		m_position = (int)(Math.random() * puzzles.length);
 		String puzzle = puzzles[m_position];
 		return puzzle;
 	}
@@ -83,11 +113,5 @@ public class Cracking {
         reader.close();
         
         return lines.toArray(new String[lines.size()]);
-	}
-	
-	public void crackPuzzles(String[] puzzles) throws Exception {
-		for (String puzzle : puzzles) {
-			crack(puzzle);
-		}
 	}
 }
