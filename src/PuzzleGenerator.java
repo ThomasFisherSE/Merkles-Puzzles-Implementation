@@ -1,10 +1,12 @@
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 public class PuzzleGenerator {
 	
-	private Puzzle[] m_puzzles = new Puzzle[1023];
+	private Puzzle[] m_puzzles = new Puzzle[NUMBER_OF_PUZZLES - 1];
 	public static final String OUTPUT_FILE = "puzzles.txt";
+	public static final int NUMBER_OF_PUZZLES = 1024;
 	
 	public void puzzleGenerationProcess() throws Exception {
 		// Clear / Create text file
@@ -16,9 +18,10 @@ public class PuzzleGenerator {
 	}
 	
 	public void generatePuzzles() throws Exception {
-		for (int puzzleNo = 0; puzzleNo < m_puzzles.length; puzzleNo++) {
-			m_puzzles[puzzleNo] = new Puzzle(puzzleNo);
-			writeToFile(m_puzzles[puzzleNo]);
+		for (int i = 0; i < m_puzzles.length; i++) {
+			int puzzleNo = new Random().nextInt((int) Math.pow(2, 16));
+			m_puzzles[i] = new Puzzle(puzzleNo);
+			writeToFile(m_puzzles[i]);
 		}
 	}
 	

@@ -24,8 +24,6 @@ public class Puzzle {
 		// First 128 zero bits
 		byte[] zeros = new byte[16];
 		
-		Arrays.fill(zeros, (byte) 0);
-		
 		// 16 bit number part
 		byte[] numberPart = CryptoLib.smallIntToByteArray(number);
 		
