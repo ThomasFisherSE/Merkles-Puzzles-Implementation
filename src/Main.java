@@ -29,11 +29,12 @@ public class Main {
            // Part 5: Demonstrating Successful Key Exchange
            System.out.println(DIVIDER + "\n Part 5:\n" + DIVIDER);
            String message = "Hello there young padawan.";
+           System.out.println("Message: " + message);
            
            String cyphertext = des.encrypt(message, CryptoLib.createKey(key));
            System.out.println("Encrypted Message: " + cyphertext);
            
            String decryptedMessage = des.decryptToString(cyphertext, CryptoLib.createKey(key));
-           System.out.println(decryptedMessage);
+           System.out.println("Decrypting this cyphertext gives: " + decryptedMessage);
        }
 }
