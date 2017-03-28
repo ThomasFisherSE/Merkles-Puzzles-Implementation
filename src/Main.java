@@ -1,5 +1,12 @@
+/**
+ * The main class used to test an implementation of Merkle's Puzzles
+ * @author Thomas Fisher, James Parry-Turner
+ */
 public class Main { 
 	
+	/**
+	 * Entry point for testing the program
+	 */
 	public static final String DIVIDER = "************************************";
        public static void main(String [] args) throws Exception {
     	   DES des = new DES();

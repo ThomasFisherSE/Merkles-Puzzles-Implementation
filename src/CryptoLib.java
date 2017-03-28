@@ -34,7 +34,7 @@ public class CryptoLib {
 	}
 	
 	
-	/*
+	/**
 	 * Convert a small integer (between 0 and 65535 inclusively) into an array of bytes of length 2.
 	 * @param i The integer to convert.
 	 * @return An array of bytes of length 2 representing the given integer in bytes (big endian).
@@ -49,7 +49,7 @@ public class CryptoLib {
 		}
 	}
 	
-	/*
+	/**
 	 * Convert an array of bytes of length 2 into a small integer (between 0 and 65535 inclusively).
 	 * @param bytes A byte array of length 2 (big endian). 
 	 * @returns The computed integer from the array of bytes. 
@@ -64,7 +64,7 @@ public class CryptoLib {
 	}
 	
 	
-	/*
+	/**
 	 * Convert an array of bytes into a string representation
 	 * (using the Base64 binary-to-text encoding scheme - See Wikipedia).
 	 * @param bytes An array of bytes to be converted into a string. 
@@ -75,7 +75,7 @@ public class CryptoLib {
 		return encoder.encodeToString(bytes);
 	}
 	
-	/*
+	/**
 	 * Convert a string (in Base64 binary-to-text
 	 * encoding scheme - See Wikipedia) into an array of bytes.
 	 * @param s A string to be converted into an array of bytes. 

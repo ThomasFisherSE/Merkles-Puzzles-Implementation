@@ -1,4 +1,5 @@
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import javax.crypto.SecretKey;
 
@@ -38,12 +39,7 @@ public class Puzzle {
 		// 64 bit key part
 		m_keyPart = m_encryptor.generateRandomKey();
 		
-		// Concatenate each part of the puzzle
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		stream.write(zeros);
-		stream.write(numberPart);
-		stream.write(m_keyPart.getEncoded());
-		m_unencryptedPuzzle = stream.toByteArray();
+		m_unencryptedPuzzle = buildPuzzle(zeros, numberPart, m_keyPart.getEncoded());
 		
 		// Set last 48 bits of encryption key to 0s
 		byte[] encryptKey = m_encryptionKey.getEncoded();
@@ -55,6 +51,23 @@ public class Puzzle {
 		
 		// Turn into plaintext
 		m_cryptogram = CryptoLib.byteArrayToString(m_encryptedPuzzle);
+	}
+	
+	/**
+	 * Build a puzzle given 3 seperate byte array parts
+	 * @param zeros, the first part of the puzzle, 128 zero bits
+	 * @param numberPart, the middle part of the puzzle, a unique 16-bit puzzle number
+	 * @param keyPart, the final part of the puzzle, a 64-bit DES key
+	 * @return The concatenated byte array, representing the whole puzzle
+	 * @throws IOException
+	 */
+	public byte[] buildPuzzle(byte[] zeros, byte[] numberPart, byte[] keyPart) throws IOException {
+		// Concatenate each part of the puzzle
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		stream.write(zeros);
+		stream.write(numberPart);
+		stream.write(keyPart);
+		return stream.toByteArray();
 	}
 	
 	/**

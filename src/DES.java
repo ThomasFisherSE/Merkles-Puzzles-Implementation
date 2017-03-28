@@ -8,6 +8,10 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * Class to perform DES encrpytion and decryption
+ * @author Thomas Fisher, James Parry-Turner, Phillip James
+ */
 public class DES {
 
 	static Cipher cipher;
@@ -18,7 +22,6 @@ public class DES {
 	  */
 	public DES() throws Exception {
 		cipher = Cipher.getInstance("DES");
-		
 	}
 
 	
