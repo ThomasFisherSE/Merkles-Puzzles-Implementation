@@ -1,5 +1,3 @@
-import java.io.PrintWriter;
-
 public class Main { 
 	
 	public static final String DIVIDER = "************************************";

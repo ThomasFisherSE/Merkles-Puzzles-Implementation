@@ -1,10 +1,7 @@
-import javax.crypto.SecretKey;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -74,7 +71,6 @@ public class Cracking {
 			
 			// Generate 6 bytes of zeros for the end of the key
 			byte[] zeros = new byte[6];
-			//Arrays.fill(zeros, (byte) 0);
 			
 			// Concatenate the key bits and the zero bits
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -111,18 +107,34 @@ public class Cracking {
 		return crackedPuzzle;
 	}
 	
+	/**
+	 * Extracts the key part from a plaintext puzzle by taking the last 8 bytes (64 bits)
+	 * @param The string puzzle as plaintext to extract a key from
+	 * @return The key part of the puzzle as a byte array
+	 */
 	public static byte[] extractKey(String puzzle)  {
 		byte[] puzzleBytes = CryptoLib.stringToByteArray(puzzle);
 		
 		return Arrays.copyOfRange(puzzleBytes, 18, 26);
 	}
 	
+	/**
+	 * Extracts the unique puzzle number part from a plaintext puzzle by taking the 
+	 * 2 bytes (16 bits) that hold the puzzle number
+ 	 * @param The string puzzle as plaintext to extract a key from
+	 * @return The key part of the puzzle as a byte array
+	 */
 	public static byte[] extractPuzzleNo(String puzzle) {
 		byte[] puzzleBytes = CryptoLib.stringToByteArray(puzzle);
 		
 		return Arrays.copyOfRange(puzzleBytes, 16, 18);
 	}
 	
+	/**
+	 * Runs through a file of string puzzles and extracts a random puzzle
+	 * @return A random puzzle from puzzles.txt
+	 * @throws IOException
+	 */
 	public static String randomPuzzle() throws IOException {
 		String[] puzzles = readPuzzleFile("puzzles.txt");
 		int pos = (int)(Math.random() * puzzles.length);
@@ -131,7 +143,10 @@ public class Cracking {
 	}
 	
 	/**
-	 * 
+	 * Reads through a file and puts the lines into an array
+	 * @param The filepath as a string of the file to read
+	 * @return An array of every line in a file
+	 * @throws IOException
 	 */
 	public static String[] readPuzzleFile(String filepath) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(filepath));	

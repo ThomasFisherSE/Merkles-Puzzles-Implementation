@@ -1,21 +1,29 @@
 import java.io.ByteArrayOutputStream;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Base64;
-
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+/**
+ * A class that will generate a single puzzle
+ * @author Thomas Fisher, James Parry-Turner
+ */
+
 public class Puzzle {
+	
 	private int m_number;
 	private SecretKey m_keyPart;
 	private SecretKey m_encryptionKey;
 	private byte[] m_encryptedPuzzle;
+	private byte[] m_unencryptedPuzzle;
 	private String m_cryptogram;
 	private DES m_encryptor;
-	private byte[] m_unencryptedPuzzle;
 	
-	public Puzzle(int number) throws Exception {
+	/**
+	 * A constructor that generates a puzzle by concatenating each byte 
+	 * array together and then encrypting it with the DES encrypt method
+	 * @param Integer number for unique puzzle number
+	 * @throws Exception
+	 */
+	public Puzzle(int number)throws Exception {
 		m_number = number;
 		m_encryptor = new DES();
 		
@@ -49,14 +57,26 @@ public class Puzzle {
 		m_cryptogram = CryptoLib.byteArrayToString(m_encryptedPuzzle);
 	}
 	
+	/**
+	 * Accessor method for puzzle number
+	 * @return Integer puzzle number
+	 */
 	public int getPuzzleNo() {
 		return m_number;
 	}
 	
+	/**
+	 * Accessor method to get the key part of the puzzle
+	 * @return A byte array of the key
+	 */
 	public byte[] getKey() {
 		return m_keyPart.getEncoded();
 	}
 	
+	/**
+	 * Give a meaningful way to display puzzle 
+	 * @return A string of the puzzle
+	 */
 	public String toString() {
 		return m_cryptogram;
 		

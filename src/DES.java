@@ -1,15 +1,11 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class DES {
@@ -101,10 +97,6 @@ public class DES {
 		KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
 		keyGenerator.init(56);
 		SecretKey secretKey = keyGenerator.generateKey();
-		
-		//print the key
-		String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-		//System.out.println(encodedKey);
 
 		return secretKey;
 	}

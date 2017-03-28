@@ -1,5 +1,4 @@
 import java.io.*;
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class PuzzleGenerator {
