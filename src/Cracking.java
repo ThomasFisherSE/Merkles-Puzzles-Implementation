@@ -31,14 +31,11 @@ public class Cracking {
 		// Get the puzzle number in a byte array of the cracked puzzle
 		byte[] puzzleNoBytes = extractPuzzleNo(crackedPuzzle);
 		
-		// Get the puzzle number as a string
-		String plaintextPuzzleNo = CryptoLib.byteArrayToString(puzzleNoBytes);
-		
 		// Convert the puzzle number into an integer
 		int puzzleNumber = CryptoLib.byteArrayToSmallInt(puzzleNoBytes);
 		
 		// Print the puzzle number
-		System.out.println("Plaintext Puzzle Number: " + plaintextPuzzleNo + " | Actual Number: " + puzzleNumber);
+		System.out.println("Puzzle Number: " + puzzleNumber);
 		
 		// Extract the key from the cracked puzzle
 		byte[] keyBytes = extractKey(crackedPuzzle);
@@ -96,7 +93,12 @@ public class Cracking {
 	
 		// Look for a puzzle with 128 zero bits at the start
 		for (String elem: plaintextPuzzles) {
-			if (elem.subSequence(0, 15).equals("AAAAAAAAAAAAAAA")) {
+			byte[] puzzleBytes = CryptoLib.stringToByteArray(elem);
+			
+			byte[] zeros = new byte[16];
+			byte[] zerosPart = Arrays.copyOfRange(puzzleBytes, 0, 16);
+			
+			if (Arrays.equals(zerosPart, zeros)) {
 				// Select this puzzle as the cracked puzzle
 				crackedPuzzle = elem;
 				// Print the cracked puzzle

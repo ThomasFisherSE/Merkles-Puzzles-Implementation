@@ -7,7 +7,7 @@ public class Main {
 	/**
 	 * Entry point for testing the program
 	 */
-	public static final String DIVIDER = "************************************";
+	public static final String DIVIDER = "********************************************************";
        public static void main(String [] args) throws Exception {
     	   DES des = new DES();
     	   
@@ -27,8 +27,7 @@ public class Main {
     	   System.out.println(DIVIDER + "\n Part 4:\n" + DIVIDER);
     	   
     	   // Part 4: Key lookup
-           byte[] puzzleNo = CryptoLib.smallIntToByteArray(crackedPuzzleNo);
-           byte[] key = generator.getKey(CryptoLib.byteArrayToString(puzzleNo));
+           byte[] key = generator.getKey(crackedPuzzleNo);
            System.out.println("Given puzzle number " + crackedPuzzleNo + ", the key is: " + CryptoLib.byteArrayToString(key));
            
            // Part 5: Demonstrating Successful Key Exchange

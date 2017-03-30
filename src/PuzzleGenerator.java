@@ -57,10 +57,10 @@ public class PuzzleGenerator {
 	 * @param Puzzle number converted to string
 	 * @return The key part of that particular puzzle
 	 */
-	public byte[] getKey(String puzzleNo) {	
+	public byte[] getKey(int puzzleNo) {	
 		// Search through the m_puzzles array to find a puzzle with a matching puzzle number
 		for (Puzzle elem: m_puzzles) {
-			if (elem.getPuzzleNo() == CryptoLib.byteArrayToSmallInt(CryptoLib.stringToByteArray(puzzleNo))) {
+			if (elem.getPuzzleNo() == puzzleNo) {
 				return elem.getKey();
 			}
 		}
