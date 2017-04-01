@@ -76,6 +76,13 @@ public class DES {
 		return decryptedText;
 	}
 	
+	/**
+	 * Decrypt encrypted text using a secret key and return the decrypted text as a byte array
+	 * @param String of encrypted text that will be decrypted
+	 * @param SecretKey object that will be used for decryption
+	 * @return Byte array representation of the message after decryption
+	 * @throws Exception
+	 */
 	public byte[] decrypt(String encryptedText, SecretKey secretKey)
 			throws Exception {
 		//Get a new Base64 (ASCII) decoder and use it to convert ciphertext from a string into bytes

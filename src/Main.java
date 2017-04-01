@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * The main class used to test an implementation of Merkle's Puzzles
  * @author Thomas Fisher, James Parry-Turner
@@ -32,7 +34,10 @@ public class Main {
            
            // Part 5: Demonstrating Successful Key Exchange
            System.out.println(DIVIDER + "\n Part 5:\n" + DIVIDER);
-           String message = "Hello there young padawan.";
+           Scanner in = new Scanner(System.in);
+           System.out.println("Enter a message to send: ");
+           String message = in.nextLine();
+           in.close();
            System.out.println("Message: " + message);
            
            String cyphertext = des.encrypt(message, CryptoLib.createKey(key));

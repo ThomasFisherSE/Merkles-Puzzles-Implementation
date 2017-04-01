@@ -18,6 +18,10 @@ public class Puzzle {
 	private String m_cryptogram;
 	private DES m_encryptor;
 	
+	private final int NUM_OF_ZERO_BYTES = 16;
+	private final int START_OF_ZERO_BITS = 2;
+	private final int END_OF_ZERO_BITS = 8;
+	
 	/**
 	 * A constructor that generates a puzzle by concatenating each byte 
 	 * array together and then encrypting it with the DES encrypt method
@@ -31,7 +35,7 @@ public class Puzzle {
 		m_encryptionKey = m_encryptor.generateRandomKey();
 		
 		// First 128 zero bits
-		byte[] zeros = new byte[16];
+		byte[] zeros = new byte[NUM_OF_ZERO_BYTES];
 		
 		// 16 bit number part
 		byte[] numberPart = CryptoLib.smallIntToByteArray(number);
@@ -43,7 +47,7 @@ public class Puzzle {
 		
 		// Set last 48 bits of encryption key to 0s
 		byte[] encryptKey = m_encryptionKey.getEncoded();
-		Arrays.fill(encryptKey, 2, 8, (byte) 0);
+		Arrays.fill(encryptKey, START_OF_ZERO_BITS, END_OF_ZERO_BITS, (byte) 0);
 		m_encryptionKey = CryptoLib.createKey(encryptKey);
 
 		// Encrypt
